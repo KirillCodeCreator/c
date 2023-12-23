@@ -1,14 +1,16 @@
 import sqlite3
 import sys
 
-from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QDialog, QMessageBox
 
+from addEditCoffeeForm_ui import Ui_DialogAddDevice
+from main_ui import Ui_MainWindow
 
-class AddCoffeeDlg(QDialog):
+
+class AddCoffeeDlg(QDialog, Ui_DialogAddDevice):
     def __init__(self):
-        super(AddCoffeeDlg, self).__init__()
-        uic.loadUi("addEditCoffeeForm.ui", self)
+        super().__init__()
+        self.setupUi(self)
         self.setWindowTitle("Добавить кофе")
 
     def accept(self) -> None:
@@ -37,10 +39,10 @@ class AddCoffeeDlg(QDialog):
         self.done(0)
 
 
-class EditCoffeeDlg(QDialog):
+class EditCoffeeDlg(QDialog, Ui_DialogAddDevice):
     def __init__(self, data):
-        super(EditCoffeeDlg, self).__init__()
-        uic.loadUi("addEditCoffeeForm.ui", self)
+        super().__init__()
+        self.setupUi(self)
         self.ID = None
         self.set_data(data)
         self.setWindowTitle("Редактировать кофе")
@@ -82,11 +84,11 @@ class EditCoffeeDlg(QDialog):
         self.done(0)
 
 
-class Window(QMainWindow):
+class Window(QMainWindow, Ui_MainWindow):
     def __init__(self):
-        super(Window, self).__init__()
-        uic.loadUi("main.ui", self)
-        self.setWindowTitle("Капучино")
+        super().__init__()
+        self.setupUi(self)
+        self.setWindowTitle("Латте макиато")
         self.db_name = 'coffee.sqlite'
         self.table()
         self.addInfoButton.clicked.connect(self.addInfoButton_clicked)
