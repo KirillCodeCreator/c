@@ -3,7 +3,7 @@ import sys
 import traceback
 
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QMessageBox, QDialog
 
 
 class Window(QMainWindow):
@@ -19,11 +19,12 @@ class Window(QMainWindow):
         db = cur.fetchall()
         self.tableWidget.setColumnCount(len(db[0]) - 1)
         self.tableWidget.setRowCount(len(db))
-        self.tableWidget.setHorizontalHeaderLabels(["Наименование", "Прожарка", "Тип", "Вкус", "Цена", "Объём"])
+        self.tableWidget.setHorizontalHeaderLabels(["Наименование", "Степень обжарки", "Тип", "Вкус", "Цена", "Объём"])
         for i, elemi in enumerate(db):
             for j, elemj in enumerate(elemi[1:]):
                 self.tableWidget.setItem(i, j, QTableWidgetItem(elemj))
         con.close()
+
 
 
 def except_hook(cls, exception, trace):
@@ -31,6 +32,7 @@ def except_hook(cls, exception, trace):
     print(tb)
 
 
+# Точка входа (Entry point)
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     sys.excepthook = except_hook
